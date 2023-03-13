@@ -1,0 +1,63 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good', 
+    'FAILURE': 'danger',
+]
+def WEB_URL = 'https://gallery-iqku.onrender.com'
+
+pipeline {
+    agent any
+    
+    tools {nodejs "nodejs"}
+    
+    
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Build is starting'
+            }
+        }
+        stage('Clone github repository') {
+            steps {
+                git url: 'https://github.com/pkarisa/gallery.git', branch: 'master'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                bat '''
+                   npm install
+                   '''
+            }
+        }
+        stage('running tests') {
+            steps {
+                bat '''
+                   npm test
+                   '''
+            }
+        }
+        stage('deploying to render') {
+            steps {
+                bat '''
+                   curl -X POST https://api.render.com/deploy/srv-cg3npce4dad1loo0qh0g?key=q7NMC8ASS-c
+                   '''
+            }
+        }
+        
+        stage('End') {
+            steps {
+                echo 'Build has run successfully'
+            }
+        }
+    }
+    post {
+        always {
+            slackSend channel: '#faith_ip1',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${JOB_NAME} build ${BUILD_NUMBER} \n link to the application ${WEB_URL} \n More information can be found at: ${BUILD_URL}HTML_20Report/"
+            
+            emailext subject: "Build ${currentBuild.currentResult}: Job ${JOB_NAME} build ${BUILD_NUMBER}",
+                body: "The build for Job ${JOB_NAME} build ${BUILD_NUMBER} a ${currentBuild.currentResult}. \n link to the application ${WEB_URL} \n More information can be found at: ${BUILD_URL}HTML_20Report/",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+         }
+    }
+}
