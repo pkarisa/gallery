@@ -28,7 +28,7 @@ For automated deployments you need to have Ngrok running and it times out after 
 ## Contact Information
 You can reach me via email fkarisa@gmail.com
 
-## Licence
+## license
 License MIT License: Copyright (c) 2023
 
 #  Credits
