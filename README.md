@@ -31,5 +31,5 @@ You can reach me via email fkarisa@gmail.com
 ## license
 License MIT License: Copyright (c) 2023
 
-#  Credits
+##  Credits
 Moringa School
