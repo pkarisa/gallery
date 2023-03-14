@@ -1,17 +1,17 @@
-Darkroom
-Web service for images.
+## Darkroom
+# Web service for images.
 
-Project Description
+# Project Description
 This is a jenkins project to test for automated deployments. Live page. This project is a web site that allows users to upload and store images.
 
-Setup Instructions
+# Setup Instructions
 There is no script required to run this. You can accesss the site directly
 
-Technologies Used
+# Technologies Used
 The technologies used include
 
-Javascript
-NodeJS
+.Javascript
+.NodeJS
 Bootstraps
 Ejs
 Express
